@@ -5,6 +5,7 @@ export interface Options {
 }
 
 export default function (_options: Options = {}): Plugin {
+  /* TODO: support HMR for new modules */
   return {
     name: 'vite-plugin-global',
     transform(code, id) {

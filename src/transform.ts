@@ -16,6 +16,7 @@ export interface AcornNode {
 export type Parse = (input: string, options?: any) => AcornNode
 
 export async function transform(code: string, id: string, parse: Parse) {
+  /* TODO: runtime warning */
   const matchs = Array.from(code.matchAll(importGlobRE))
   if (!matchs.length)
     return { code }
