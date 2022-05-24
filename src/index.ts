@@ -8,7 +8,7 @@ export default function (_options: Options = {}): Plugin {
   return {
     name: 'vite-plugin-global',
     transform(code, id) {
-      return transform(code, id)
+      return transform(code, id, this.parse)
     },
   }
 }

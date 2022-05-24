@@ -1,13 +1,21 @@
 import { dirname } from 'path'
 import fg from 'fast-glob'
 import MagicString from 'magic-string'
-import { parse } from 'acorn'
+// import { parse } from 'acorn'
 import type { ArrayExpression, Literal, ObjectExpression } from 'estree'
 
 const importGlobRE = /\bimport\.meta\.myGlob(?:<\w+>)?\(([\s\S]*?)\)/g
 const importPrefix = '__vite_global__'
 
-export async function transform(code: string, id: string) {
+export interface AcornNode {
+  end: number
+  start: number
+  type: string
+}
+
+export type Parse = (input: string, options?: any) => AcornNode
+
+export async function transform(code: string, id: string, parse: Parse) {
   const matchs = Array.from(code.matchAll(importGlobRE))
   if (!matchs.length)
     return { code }
@@ -23,7 +31,9 @@ export async function transform(code: string, id: string) {
     const globs: string[] = []
     if (arg1.type === 'ArrayExpression') {
       for (const element of arg1.elements) {
+        /* @ts-expect-error let me do it */
         if (element.type === 'Literal')
+        /* @ts-expect-error let me do it */
           globs.push(element.value as string)
       }
     }

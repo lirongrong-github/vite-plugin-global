@@ -1,6 +1,7 @@
 import { resolve } from 'path'
 /* import { promises as fs } from 'fs' */
 import { describe, expect, it } from 'vitest'
+import { parse } from 'acorn'
 import { transform } from '../src/transform'
 import code from './fixtures/index.ts?raw'
 
@@ -31,7 +32,7 @@ describe('should', async () => {
       ], { eager: true })
       "
     `)
-    expect((await transform(code, id))?.code)
+    expect((await transform(code, id, parse))?.code)
       .toMatchInlineSnapshot(`
         "import * as __vite_global__3_0 from './modules/a.ts'
         import * as __vite_global__3_1 from './modules/b.ts'
