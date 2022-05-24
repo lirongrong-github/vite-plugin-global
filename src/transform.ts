@@ -2,12 +2,12 @@ import { dirname } from 'path'
 import fg from 'fast-glob'
 import MagicString from 'magic-string'
 
-const importGlobRE = /\bimport\.meta\.globNext\((.*)\)/g
+const importGlobRE = /\bimport\.meta\.globNext(?:<\w+>)?\((.*)\)/g
 
 export async function transform(code: string, id: string) {
   const matchs = Array.from(code.matchAll(importGlobRE))
   if (!matchs.length)
-    return code
+    return
   const s = new MagicString(code)
   for (const match of matchs) {
     const glob = match[1].slice(1, -1)
