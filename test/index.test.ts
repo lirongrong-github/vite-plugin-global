@@ -12,7 +12,12 @@ describe('should', async () => {
         name: string
       }
 
-      export const list = import.meta.globNext<ModuleType>('./modules/*.ts')
+      export const list1 = import.meta.globNext<ModuleType>('./modules/*.ts')
+
+      export const list2 = import.meta.globNext<ModuleType>([
+        './modules/*.ts',
+        '!**/index.ts',
+      ])
       "
     `)
     expect((await transform(code, id))?.code)
@@ -21,7 +26,9 @@ describe('should', async () => {
           name: string
         }
 
-        export const list = {'./modules/a.ts': () => import('./modules/a.ts'), './modules/b.ts': () => import('./modules/b.ts'), './modules/index.ts': () => import('./modules/index.ts')}
+        export const list1 = {'./modules/a.ts': () => import('./modules/a.ts'), './modules/b.ts': () => import('./modules/b.ts'), './modules/index.ts': () => import('./modules/index.ts')}
+
+        export const list2 = {'./modules/a.ts': () => import('./modules/a.ts'), './modules/b.ts': () => import('./modules/b.ts')}
         "
       `)
   })
