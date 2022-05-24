@@ -47,6 +47,7 @@
     "release": "bumpp --commit --push --tag && npm publish",
     "start": "esno src/index.ts",
     "test": "vitest",
+    "tu": "vitest -u",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {

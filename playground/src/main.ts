@@ -1,5 +1,5 @@
 import './style.css'
-import { list1, list2 } from '../../test/fixtures'
+import { list1, list2, list3, list4 } from '../../test/fixtures'
 
 const app = document.querySelector<HTMLDivElement>('#app')!
 
@@ -12,16 +12,19 @@ const app = document.querySelector<HTMLDivElement>('#app')!
   name: string
 }
 
-const list = import.meta.globNext<ModuleType>('./fixtures/*.ts') */
+const list = import.meta.myGlob<ModuleType>('./fixtures/*.ts') */
 
 /* console.log(list1) */
 
-Promise.all(Object.values(list1).map(i => i()))
+await Promise.all(Object.values(list1).map(i => i()))
   .then((modules) => {
-    app.textContent += JSON.stringify(modules)
+    app.innerHTML += `${JSON.stringify(modules)}<br>`
   })
 
-Promise.all(Object.values(list2).map(i => i()))
+await Promise.all(Object.values(list2).map(i => i()))
   .then((modules) => {
-    app.textContent += JSON.stringify(modules)
+    app.innerHTML += `${JSON.stringify(modules)}<br>`
   })
+
+app.innerHTML += `${JSON.stringify(list3)}<br>`
+app.innerHTML += `${JSON.stringify(list4)}<br>`
